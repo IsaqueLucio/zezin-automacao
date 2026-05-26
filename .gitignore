@@ -1,0 +1,10 @@
+# Ignorar dados do banco do n8n e sessões
+n8n_data/
+.n8n/
+
+# Ignorar variáveis de ambiente e senhas
+.env
+
+# Ignorar arquivos temporários e logs
+*.log
+.DS_Store

@@ -1,0 +1,1750 @@
+{
+  "name": "Zezin Categorização",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds",
+              "secondsInterval": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -704,
+        320
+      ],
+      "id": "07ac6d84-9332-48f1-af6e-b56efbc7fc5f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://discord.com/api/v10/guilds/1505080967423987763/threads/active",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -480,
+        320
+      ],
+      "id": "b09af383-1422-4604-a26e-a33aa60e36e4",
+      "name": "HTTP Request",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "threads",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        320
+      ],
+      "id": "f15e6a44-ba74-40f5-a695-5d80964fcf35",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -64,
+        320
+      ],
+      "id": "16b865bf-1604-4e8a-bc66-b7cc7c25e043",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "guildId": {
+          "__rl": true,
+          "value": "1505080967423987763",
+          "mode": "list",
+          "cachedResultName": "test-server",
+          "cachedResultUrl": "https://discord.com/channels/1505080967423987763"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "limit": 5,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        192,
+        336
+      ],
+      "id": "04e3e3ee-0da9-44df-b7e6-e830a0084733",
+      "name": "Get many messages",
+      "webhookId": "510ca770-04bb-4b42-ba8e-5bd437f67002",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.content.toUpperCase().trim() }}",
+                    "rightValue": "P0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "bb963e97-eeff-4e09-a60d-cb12e5f937d6"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5b52c66a-c885-4ea7-b570-87713492b2a5",
+                    "leftValue": "={{ $json.content.toUpperCase().trim() }}",
+                    "rightValue": "P1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a095d8ad-df06-493a-9e11-8c03553ddd5b",
+                    "leftValue": "={{ $json.content.toUpperCase().trim() }}",
+                    "rightValue": "P2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c07c597e-48b5-4b82-a50a-a5868455c0ec",
+                    "leftValue": "={{ $json.content.toUpperCase().trim() }}",
+                    "rightValue": "PRIORIZACAO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "120953b1-a3fc-4a83-9c4b-64f93f1ca0fc",
+                    "leftValue": "={{ $json.content.toUpperCase().trim() }}",
+                    "rightValue": "INFORMACAO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -800,
+        752
+      ],
+      "id": "a6081754-4c7f-4e30-9488-eb976b756bcf",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bb4498fe-5b71-4d76-b434-a5dcdd5d5227",
+              "leftValue": "={{ $json.message_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        576
+      ],
+      "id": "ae3a6bdb-1f69-4d58-a4a7-0e1cdd7b8765",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "category_message_id",
+              "lookupValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -400,
+        576
+      ],
+      "id": "69db6cf0-8d5e-4e8e-a9a9-b4afa3900494",
+      "name": "Get row(s) in sheet1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $('Get many messages').item.json.channel_id }}",
+            "thread_category": "={{ $('Switch').item.json.content.toUpperCase().trim() }}",
+            "category_message_id": "={{ $('Switch').item.json.id }}",
+            "status": "Pendente"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category_message_id",
+              "displayName": "category_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thread_category",
+              "displayName": "thread_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        560
+      ],
+      "id": "70b89079-b92e-49a3-9914-56b2b3e7bf73",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1505080967423987763",
+          "mode": "list",
+          "cachedResultName": "test-server",
+          "cachedResultUrl": "https://discord.com/channels/1505080967423987763"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $json.thread_id }}",
+          "mode": "id"
+        },
+        "content": "=🔔 Categoria P0 registrada! Clique no link abaixo para preencher os dados finais do seu chamado:\nhttps://tally.so/r/5Be67b?thread_id={{ $('Switch').item.json.channel_id }}&user_id={{ $('Switch').item.json.author.id }}&categoria=P0",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        560
+      ],
+      "id": "61af4eac-a51d-4f8d-b6d5-ea7d37b361f7",
+      "name": "Send a message",
+      "webhookId": "f8fc55c3-fc74-4927-82d7-e88d2b8d514a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bb4498fe-5b71-4d76-b434-a5dcdd5d5227",
+              "leftValue": "={{ $json.message_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        736
+      ],
+      "id": "dfbb2ea3-2c05-4478-b632-19f7f0670059",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "category_message_id",
+              "lookupValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -400,
+        736
+      ],
+      "id": "db4748a9-4b6b-4e7f-b193-ea8bdebac089",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $('Get many messages').item.json.channel_id }}",
+            "thread_category": "={{ $('Switch').item.json.content.toUpperCase().trim() }}",
+            "category_message_id": "={{ $('Switch').item.json.id }}",
+            "status": "Pendente"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category_message_id",
+              "displayName": "category_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thread_category",
+              "displayName": "thread_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        720
+      ],
+      "id": "e481d807-5f9d-404a-a6c0-14bfb78051fe",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1505080967423987763",
+          "mode": "list",
+          "cachedResultName": "test-server",
+          "cachedResultUrl": "https://discord.com/channels/1505080967423987763"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $json.thread_id }}",
+          "mode": "id"
+        },
+        "content": "=🔔 Categoria P1 registrada! Clique no link abaixo para preencher os dados finais do seu chamado:\nhttps://tally.so/r/5Be67b?thread_id={{ $('Switch').item.json.channel_id }}&user_id={{ $('Switch').item.json.author.id }}&categoria=P1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        720
+      ],
+      "id": "0f96feb0-763e-40bb-9948-1479983cb8d4",
+      "name": "Send a message1",
+      "webhookId": "f8fc55c3-fc74-4927-82d7-e88d2b8d514a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bb4498fe-5b71-4d76-b434-a5dcdd5d5227",
+              "leftValue": "={{ $json.message_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        896
+      ],
+      "id": "1259bf9f-2e04-414a-9100-abd3d5d086e4",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "category_message_id",
+              "lookupValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -400,
+        896
+      ],
+      "id": "8f309186-470b-4bba-b760-368ab24172d4",
+      "name": "Get row(s) in sheet2",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $('Get many messages').item.json.channel_id }}",
+            "thread_category": "={{ $('Switch').item.json.content.toUpperCase().trim() }}",
+            "category_message_id": "={{ $('Switch').item.json.id }}",
+            "status": "Pendente"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category_message_id",
+              "displayName": "category_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thread_category",
+              "displayName": "thread_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        880
+      ],
+      "id": "a356cfcc-530f-4be0-9d43-75b405d820d5",
+      "name": "Update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1505080967423987763",
+          "mode": "list",
+          "cachedResultName": "test-server",
+          "cachedResultUrl": "https://discord.com/channels/1505080967423987763"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $json.thread_id }}",
+          "mode": "id"
+        },
+        "content": "=🔔 Categoria P2 registrada! Clique no link abaixo para preencher os dados finais do seu chamado:\nhttps://tally.so/r/5Be67b?thread_id={{ $('Switch').item.json.channel_id }}&user_id={{ $('Switch').item.json.author.id }}&categoria=P2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        880
+      ],
+      "id": "4728eb44-65e3-46c5-a82f-ebcd9596a461",
+      "name": "Send a message2",
+      "webhookId": "f8fc55c3-fc74-4927-82d7-e88d2b8d514a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bb4498fe-5b71-4d76-b434-a5dcdd5d5227",
+              "leftValue": "={{ $json.message_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        1056
+      ],
+      "id": "3ee5edf1-8cdd-4999-90cc-c50a050f7d30",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "category_message_id",
+              "lookupValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -400,
+        1056
+      ],
+      "id": "e4feafcb-7193-4796-9995-a9796b1d2640",
+      "name": "Get row(s) in sheet3",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $('Get many messages').item.json.channel_id }}",
+            "thread_category": "={{ $('Switch').item.json.content.toUpperCase().trim() }}",
+            "category_message_id": "={{ $('Switch').item.json.id }}",
+            "status": "Pendente"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category_message_id",
+              "displayName": "category_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thread_category",
+              "displayName": "thread_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        1040
+      ],
+      "id": "b6f710c6-5c8a-4e89-b000-69ced13ed69e",
+      "name": "Update row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1505080967423987763",
+          "mode": "list",
+          "cachedResultName": "test-server",
+          "cachedResultUrl": "https://discord.com/channels/1505080967423987763"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $json.thread_id }}",
+          "mode": "id"
+        },
+        "content": "=🔔 Categoria PRIORIZACAO registrada! Clique no link abaixo para preencher os dados finais do seu chamado:\nhttps://tally.so/r/5Be67b?thread_id={{ $('Switch').item.json.channel_id }}&user_id={{ $('Switch').item.json.author.id }}&categoria=PRIORIZACAO",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        1040
+      ],
+      "id": "41b70b62-31e2-44b7-8776-5e93c07244e9",
+      "name": "Send a message3",
+      "webhookId": "f8fc55c3-fc74-4927-82d7-e88d2b8d514a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bb4498fe-5b71-4d76-b434-a5dcdd5d5227",
+              "leftValue": "={{ $json.message_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        1216
+      ],
+      "id": "f2bfaa3e-c8ed-42a8-8e61-0cc1479eb465",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "category_message_id",
+              "lookupValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -400,
+        1216
+      ],
+      "id": "6b6d6b59-9845-4853-aea5-beb0116d076c",
+      "name": "Get row(s) in sheet4",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $('Get many messages').item.json.channel_id }}",
+            "thread_category": "={{ $('Switch').item.json.content.toUpperCase().trim() }}",
+            "category_message_id": "={{ $('Switch').item.json.id }}",
+            "status": "Pendente"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category_message_id",
+              "displayName": "category_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "thread_category",
+              "displayName": "thread_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        1200
+      ],
+      "id": "248e2f10-f00b-4fbf-886c-db59d90d4a18",
+      "name": "Update row in sheet4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1505080967423987763",
+          "mode": "list",
+          "cachedResultName": "test-server",
+          "cachedResultUrl": "https://discord.com/channels/1505080967423987763"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "={{ $json.thread_id }}",
+          "mode": "id"
+        },
+        "content": "=🔔 Categoria INFORMACAO registrada! Clique no link abaixo para preencher os dados finais do seu chamado:\nhttps://tally.so/r/5Be67b?thread_id={{ $('Switch').item.json.channel_id }}&user_id={{ $('Switch').item.json.author.id }}&categoria=INFORMACAO",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        1200
+      ],
+      "id": "6474aed3-d7b5-4537-8f5d-e71dbf5e4d71",
+      "name": "Send a message4",
+      "webhookId": "f8fc55c3-fc74-4927-82d7-e88d2b8d514a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet3": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet3": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet4": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet4": {
+      "main": [
+        [
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message4": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "90b52e9b-e608-4db5-b899-a0ad2f326135",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "148688ffd0fce9ba1f2bfaee600cbc13ceeb9c0a238de61bc86b6edaf71e44fd"
+  },
+  "id": "6OrUaQPog7BCSrSA",
+  "tags": []
+}

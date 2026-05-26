@@ -1,0 +1,1189 @@
+{
+  "name": "Zézin Analises",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1424,
+        -32
+      ],
+      "id": "b6c1b930-a9e0-4dae-9f54-ca9ea550c523",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status_analise",
+              "lookupValue": "Pendente"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1184,
+        -32
+      ],
+      "id": "21de63a2-fa49-4967-8f8b-aab431ed9e83",
+      "name": "Get Pendentes",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "status",
+              "lookupValue": "Pendente"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1456,
+        320
+      ],
+      "id": "14752fc4-e0a9-4c81-a9e7-de885ce5631a",
+      "name": "Get Parados",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -944,
+        -32
+      ],
+      "id": "2d8f2b52-7ff8-4737-a93f-32f7fbc68dde",
+      "name": "Loop Pendentes"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1216,
+        320
+      ],
+      "id": "a3ed8c33-def0-43a8-8686-44de872ff388",
+      "name": "Loop Parados"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.category }}",
+                    "rightValue": "P0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "switch-p0"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.category }}",
+                    "rightValue": "P1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "switch-p1"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.category }}",
+                    "rightValue": "P2",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "switch-p2"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.category }}",
+                    "rightValue": "PRIORIZACAO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "switch-priorizacao"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.category }}",
+                    "rightValue": "INFORMACAO",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "switch-informacao"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -704,
+        -32
+      ],
+      "id": "fa50fd03-b7bf-415d-816a-45d78200f49d",
+      "name": "Switch Categoria"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.thread_id }}",
+            "status_analise": "Em Análise",
+            "diagnostico": "CRÍTICA — Requer atenção imediata"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status_analise",
+              "displayName": "status_analise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "diagnostico",
+              "displayName": "diagnostico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -464,
+        -240
+      ],
+      "id": "98624798-3266-4c44-8c72-6f6e3079f18d",
+      "name": "Update P0",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.thread_id }}",
+            "status_analise": "Em Análise",
+            "diagnostico": "ALTA — Erro que impede o trabalho"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status_analise",
+              "displayName": "status_analise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "diagnostico",
+              "displayName": "diagnostico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -464,
+        -80
+      ],
+      "id": "a147dbb1-b4cc-4198-b8ca-0a54557f4574",
+      "name": "Update P1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.thread_id }}",
+            "status_analise": "Em Análise",
+            "diagnostico": "MODERADA — Bug com impacto parcial"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status_analise",
+              "displayName": "status_analise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "diagnostico",
+              "displayName": "diagnostico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -464,
+        80
+      ],
+      "id": "e15b61df-f7d4-4d19-9c64-a4da72e01e1d",
+      "name": "Update P2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.thread_id }}",
+            "status_analise": "Em Análise",
+            "diagnostico": "MELHORIA — Solicitação de priorização"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status_analise",
+              "displayName": "status_analise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "diagnostico",
+              "displayName": "diagnostico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -496,
+        272
+      ],
+      "id": "9da72dd8-b364-4a13-94f2-d628f5937a75",
+      "name": "Update PRIORIZACAO",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.thread_id }}",
+            "status_analise": "Em Análise",
+            "diagnostico": "DÚVIDA — Solicitação de informação"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status_analise",
+              "displayName": "status_analise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "diagnostico",
+              "displayName": "diagnostico",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -496,
+        432
+      ],
+      "id": "b17de8d7-da9a-4602-adb2-704cbef2b04e",
+      "name": "Update INFORMACAO",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $json.thread_id }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🔍 Chamado recebido e classificado!\\n• **Prioridade**: CRÍTICA\\n• **Categoria**: {{ $('Loop Pendentes').item.json.category }}\\n• **Status**: Em Análise\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -224,
+        -240
+      ],
+      "id": "25a62408-8a69-43be-b664-e4119ed652c4",
+      "name": "MSG Thread P0",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/1507243875088203906/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🚨 **CHAMADO CRÍTICO (P0)**\\n• **Thread**: https://discord.com/channels/1505080967423987763/{{ $('Loop Pendentes').item.json.thread_id }}\\n• **Usuário**: <@{{ $('Loop Pendentes').item.json.user_id }}>\\n• **Problema**: {{ $('Loop Pendentes').item.json.problem_description }}\\n• **Impacto**: {{ $('Loop Pendentes').item.json.impact_description }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        16,
+        -240
+      ],
+      "id": "afe90cfc-15c9-4a7c-83ce-1c9154d811fc",
+      "name": "MSG Canal Crítico P0",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $json.thread_id }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🔍 Chamado recebido e classificado!\\n• **Prioridade**: ALTA\\n• **Categoria**: {{ $json.category }}\\n• **Status**: Em Análise\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -224,
+        -80
+      ],
+      "id": "4799227b-d026-47a1-9f18-3f4ec6a9fceb",
+      "name": "MSG Thread P1",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $json.thread_id }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🔍 Chamado recebido e classificado!\\n• **Prioridade**: MODERADA\\n• **Categoria**: {{ $json.category }}\\n• **Status**: Em Análise\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -224,
+        80
+      ],
+      "id": "f5b8d538-9727-4972-933f-761156ad1127",
+      "name": "MSG Thread P2",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $json.thread_id }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🔍 Chamado recebido e classificado!\\n• **Prioridade**: MELHORIA\\n• **Categoria**: {{ $json.category }}\\n• **Status**: Em Análise\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -256,
+        272
+      ],
+      "id": "22597a9c-49bc-45c0-a057-513e28b08154",
+      "name": "MSG Thread PRIORIZACAO",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $json.thread_id }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🔍 Chamado recebido e classificado!\\n• **Prioridade**: DÚVIDA\\n• **Categoria**: {{ $json.category }}\\n• **Status**: Em Análise\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -256,
+        432
+      ],
+      "id": "9c60256e-a0ab-43a0-beeb-37de9b30a46a",
+      "name": "MSG Thread INFORMACAO",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst resultado = [];\n\nfor (const item of items) {\n  const submitted = new Date(item.json.submitted_at);\n  const agora = new Date();\n  const diffMinutos = (agora - submitted) / 1000 / 60;\n\n  if (diffMinutos > 2) {\n    resultado.push({\n      json: {\n        ...item.json,\n        tempo_parado: Math.round(diffMinutos)\n      }\n    });\n  }\n}\n\nif (resultado.length === 0) return [{ json: { vazio: true } }];\nreturn resultado;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -976,
+        320
+      ],
+      "id": "9c3a11ad-f137-4f85-b1fb-751bf1e5e0a6",
+      "name": "Check Tempo Parado"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "check-vazio",
+              "leftValue": "={{ $json.vazio }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -768,
+        320
+      ],
+      "id": "832303b2-ff7a-48af-90a0-c6dcfd765d72",
+      "name": "If Vazio"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.thread_id }}",
+            "status": "Parado"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -112,
+        336
+      ],
+      "id": "065beebf-98ca-4f8e-b11a-9e8b901ece54",
+      "name": "Update Parado",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $json.thread_id }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"⏳ <@{{ $json.user_id }}>, notamos que você ainda não preencheu o formulário do seu chamado. Por favor, acesse o link enviado anteriormente para concluir a triagem!\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        96,
+        336
+      ],
+      "id": "1b21b360-6970-4da3-8635-69442b36bb77",
+      "name": "MSG Cobrança",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Pendentes",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Parados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pendentes": {
+      "main": [
+        [
+          {
+            "node": "Loop Pendentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Parados": {
+      "main": [
+        [
+          {
+            "node": "Check Tempo Parado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Pendentes": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Switch Categoria",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Categoria": {
+      "main": [
+        [
+          {
+            "node": "Update P0",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update P1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update P2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update PRIORIZACAO",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update INFORMACAO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update P0": {
+      "main": [
+        [
+          {
+            "node": "MSG Thread P0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Thread P0": {
+      "main": [
+        [
+          {
+            "node": "MSG Canal Crítico P0",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Canal Crítico P0": {
+      "main": [
+        [
+          {
+            "node": "Loop Pendentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update P1": {
+      "main": [
+        [
+          {
+            "node": "MSG Thread P1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Thread P1": {
+      "main": [
+        [
+          {
+            "node": "Loop Pendentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update P2": {
+      "main": [
+        [
+          {
+            "node": "MSG Thread P2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Thread P2": {
+      "main": [
+        [
+          {
+            "node": "Loop Pendentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update PRIORIZACAO": {
+      "main": [
+        [
+          {
+            "node": "MSG Thread PRIORIZACAO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Thread PRIORIZACAO": {
+      "main": [
+        [
+          {
+            "node": "Loop Pendentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update INFORMACAO": {
+      "main": [
+        [
+          {
+            "node": "MSG Thread INFORMACAO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Thread INFORMACAO": {
+      "main": [
+        [
+          {
+            "node": "Loop Pendentes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Tempo Parado": {
+      "main": [
+        [
+          {
+            "node": "If Vazio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Vazio": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Loop Parados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Parados": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Update Parado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Parado": {
+      "main": [
+        [
+          {
+            "node": "MSG Cobrança",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MSG Cobrança": {
+      "main": [
+        [
+          {
+            "node": "Loop Parados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1e414c47-9cd6-4954-a26d-9d40a42ec07e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "148688ffd0fce9ba1f2bfaee600cbc13ceeb9c0a238de61bc86b6edaf71e44fd"
+  },
+  "id": "ucI78ODMnQVleue6",
+  "tags": []
+}

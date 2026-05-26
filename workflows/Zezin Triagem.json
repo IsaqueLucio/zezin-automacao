@@ -1,0 +1,350 @@
+{
+  "name": "Zezin Triagem",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "e7c01ee5-955d-48dd-bd87-6b78542ab444",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -512,
+        -128
+      ],
+      "id": "60048d5b-2cf0-4cbe-a44c-565b0928a3fb",
+      "name": "Webhook",
+      "webhookId": "e7c01ee5-955d-48dd-bd87-6b78542ab444"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Construção | Categorização",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $json.body.data.fields[0].value }}",
+            "status": "Concluido"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message_id",
+              "displayName": "message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "category_message_id",
+              "displayName": "category_message_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "thread_category",
+              "displayName": "thread_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -304,
+        -128
+      ],
+      "id": "b007ad36-7124-4b33-ad86-be54adaf541e",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA",
+          "mode": "list",
+          "cachedResultName": "Zezin",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 480114674,
+          "mode": "list",
+          "cachedResultName": "Triagem | Analises",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1hVmOve9rEhkx1yPD0JmrMUcr7GVnwbrdITz5xK8zGMA/edit#gid=480114674"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "thread_id": "={{ $('Webhook').item.json.body.data.fields[0].value }}",
+            "user_id": "={{ $('Webhook').item.json.body.data.fields[1].value }}",
+            "category": "={{ $('Webhook').item.json.body.data.fields[2].value }}",
+            "problem_description": "={{ $('Webhook').item.json.body.data.fields[3].value }}",
+            "impact_description": "={{ $('Webhook').item.json.body.data.fields[4].value }}",
+            "anexo_url": "={{ $('Webhook').item.json.body.data.fields[5].value[0].url }}",
+            "submitted_at": "={{ $('Webhook').item.json.body.data.createdAt }}",
+            "submission_id": "={{ $('Webhook').item.json.body.data.submissionId }}",
+            "status_analise": "Pendente"
+          },
+          "matchingColumns": [
+            "thread_id"
+          ],
+          "schema": [
+            {
+              "id": "thread_id",
+              "displayName": "thread_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "problem_description",
+              "displayName": "problem_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "impact_description",
+              "displayName": "impact_description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "anexo_url",
+              "displayName": "anexo_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "submission_id",
+              "displayName": "submission_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "submitted_at",
+              "displayName": "submitted_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status_analise",
+              "displayName": "status_analise",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -96,
+        -128
+      ],
+      "id": "f8fc07c1-334c-4bf5-b708-c529a1b1e887",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jom2wppmGWDOZEl0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/v10/channels/{{ $('Webhook').item.json.body.data.fields[0].value }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"🚨 <@{{ $('Webhook').item.json.body.data.fields[1].value }}> preencheu o formulário **{{ $('Webhook').item.json.body.data.fields[2].value }}**\\n• **problem_description**: {{ $('Webhook').item.json.body.data.fields[3].value }}\\n• **impact_description**: {{ $('Webhook').item.json.body.data.fields[4].value }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        112,
+        -128
+      ],
+      "id": "b3177c3a-fdbf-47f7-b616-faa6b59e2c33",
+      "name": "HTTP Request",
+      "credentials": {
+        "discordBotApi": {
+          "id": "wCzkpyWhjL8XhckN",
+          "name": "Discord Bot account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "df92101d-5e08-46fa-b78a-6a276b5c43eb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "148688ffd0fce9ba1f2bfaee600cbc13ceeb9c0a238de61bc86b6edaf71e44fd"
+  },
+  "id": "f1AXxEyyLNb9Jakt",
+  "tags": []
+}
